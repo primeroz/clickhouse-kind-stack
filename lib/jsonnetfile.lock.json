@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "dependencies": [
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/jsonnet-libs/contour-libsonnet.git",
+          "subdir": ""
+        }
+      },
+      "version": "cf2331dda6b3485f3369226ae33a900cd5cb4744",
+      "sum": "cYT/RO4IJKs2KbwnBE7Bp6tqJPFv25a7/hKKk6yVsH4="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/jsonnet-libs/gateway-api-libsonnet.git",
+          "subdir": ""
+        }
+      },
+      "version": "d647c748693c4238a41e9310fb19a4affeff089e",
+      "sum": "LMlx5D5pwCReSH9FQ8Mccr7rWASBEGSloAikKrrT70c="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/jsonnet-libs/k8s-libsonnet.git",
+          "subdir": ""
+        }
+      },
+      "version": "44a9f3d21c089a01f62b22e25bdf553f488a74e8",
+      "sum": "Slew7s2VicGWv10Sj/KE8Q8yNS09pSWLfi6qUBBOnqQ="
+    }
+  ],
+  "legacyImports": false
+}
