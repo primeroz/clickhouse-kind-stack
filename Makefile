@@ -12,6 +12,10 @@ run: create-kind # Run the project
 create-contour-gateway: # Install the Contour Gateway Controller
 	$(MAKE) -C contour-gateway-controller create
 
+.PHONY: create-jupyterhub
+create-jupyterhub: # Install the Jupyterhub
+	$(MAKE) -C jupyter create
+
 .PHONY: create-kind
 create-kind: # Create the kind cluster
 	@./kind.sh exists || ./kind.sh create
