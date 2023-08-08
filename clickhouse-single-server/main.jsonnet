@@ -12,8 +12,8 @@ ch + client {
 
   _config+:: {
     gateway: {
-      class: 'contour',
-      namespace: 'projectcontour',
+      name: 'nginx-gateway',
+      namespace: 'nginx-gateway',
       hostname: 'clickhouse.127.0.0.1.nip.io',
     },
   },
@@ -25,7 +25,7 @@ ch + client {
     httpRoute.spec.withParentRefsMixin(
       httpRoute.spec.parentRefs.withGroup('gateway.networking.k8s.io') +
       httpRoute.spec.parentRefs.withKind('Gateway') +
-      httpRoute.spec.parentRefs.withName($._config.gateway.class) +
+      httpRoute.spec.parentRefs.withName($._config.gateway.name) +
       httpRoute.spec.parentRefs.withNamespace($._config.gateway.namespace),
     ) +
     httpRoute.spec.withHostnamesMixin($._config.gateway.hostname) +
@@ -41,13 +41,34 @@ ch + client {
       ),
     ),
 
-  _serviceNativeNodePort:
-    svc.new('clickhouse-np', $._server_statefulSet.spec.selector.matchLabels, []) +
-    svc.metadata.withNamespace($._config.namespace) +
-    svc.spec.withPortsMixin(
-      svcPort.newNamed('native', 9000, 9000) +
-      svcPort.withNodePort(30009)
-    ) +
-    svc.spec.withType('NodePort'),
+  _tcproute: {
+    apiVersion: 'gateway.networking.k8s.io/v1alpha2',
+    kind: 'TCPRoute',
+    metadata: {
+      name: 'clickhouse-native',
+      namespace: 'clickhouse',
+    },
+    spec: {
+      parentRefs: [
+        {
+          group: 'gateway.networking.k8s.io',
+          kind: 'Gateway',
+          name: 'nginx-gateway',
+          namespace: 'nginx-gateway',
+          sectionName: 'clickhouse',
+        },
+      ],
+      rules: [
+        {
+          backendRefs: [
+            {
+              name: 'clickhouse',
+              port: 9000,
+            },
+          ],
+        },
+      ],
+    },
+  },
 
 }
