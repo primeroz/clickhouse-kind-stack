@@ -31,6 +31,11 @@ local data = {
         type: 'ClusterIP',
       },
     },
+    scheduling: {
+      userScheduler: {
+        enabled: false,
+      },
+    },
   },
 
   _namespace::
@@ -49,7 +54,7 @@ local data = {
         'user-placeholder'+: {
           apiVersion: 'policy/v1',
         },
-        'user-scheduler'+: {
+        [if $._values.scheduling.userScheduler.enabled then 'user-scheduler']+: {
           apiVersion: 'policy/v1',
         },
       },

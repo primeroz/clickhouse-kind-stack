@@ -29,6 +29,11 @@ create: # Install the JupyterHub workload
 	kubectl wait --namespace jupyterhub --timeout=90s --for=condition=complete job hook-image-awaiter; \
   e_success "Done"
 
+
+.PHONY: show
+show:  # Show the manifests
+	kubecfg -J ../lib show main.jsonnet
+
 #.PHONY: clean
 #clean: # Clean the project
 
