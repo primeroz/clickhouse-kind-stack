@@ -64,7 +64,7 @@ local data = {
       g.v1beta1.httpRoute.spec.parentRefs.withGroup('gateway.networking.k8s.io') +
       g.v1beta1.httpRoute.spec.parentRefs.withKind('Gateway') +
       g.v1beta1.httpRoute.spec.parentRefs.withName($._config.gateway.class) +
-      g.v1beta1.httpRoute.spec.parentRefs.withName($._config.gateway.namespace),
+      g.v1beta1.httpRoute.spec.parentRefs.withNamespace($._config.gateway.namespace),
     ) +
     g.v1beta1.httpRoute.spec.withHostnamesMixin($._config.gateway.hostname) +
     g.v1beta1.httpRoute.spec.withRulesMixin(
@@ -80,8 +80,8 @@ local data = {
     ),
 
   objects: {
-    namespace: $._namespace,
-    upstream: $._upstream {
+    phase0: $._namespace,
+    phase1: $._upstream {
       httpRoute: $._httproute,
     },
   },

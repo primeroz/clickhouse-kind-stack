@@ -17,9 +17,9 @@ update-helm: # Update helm vendored version
 create: # Install the JupyterHub workload
 	@source ../common ;\
   e_header "Creating JupyterHub" ;\
-	kubecfg -J ../lib show -e "(import 'main.jsonnet').objects.namespace" | kubectl --server-side=true apply -f -; \
+	kubecfg -J ../lib show -e "(import 'main.jsonnet').objects.phase0" | kubectl --server-side=true apply -f -; \
 	sleep 2
-	kubecfg -J ../lib show -e "(import 'main.jsonnet').objects.upstream" | kubectl --server-side=true apply -f -; \
+	kubecfg -J ../lib show -e "(import 'main.jsonnet').objects.phase1" | kubectl --server-side=true apply -f -; \
 	sleep 5
 	kubectl wait --namespace jupyterhub --for=condition=available --timeout=90s deploy/hub; \
 	kubectl wait --namespace jupyterhub --for=condition=available --timeout=90s deploy/proxy; \

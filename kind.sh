@@ -49,10 +49,10 @@ nodes:
     networking:
       dnsDomain: cluster.local
   extraPortMappings:
-  - containerPort: 80
+  - containerPort: 30080
     hostPort: 80
     protocol: TCP
-  - containerPort: 443
+  - containerPort: 30443
     hostPort: 443
     protocol: TCP
 EOF

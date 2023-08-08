@@ -19,6 +19,11 @@ local data = {
     version: '1.25',
     name: 'contour',
     namespace: 'projectcontour',
+    listeners: {
+      http: {
+        port: 30080,  // This port will be used as NODEPORT for the service and is also set in kind as forward
+      },
+    },
   },
 
   _contourDeploymentConfiguration::
@@ -41,16 +46,16 @@ local data = {
     gateway.spec.withListenersMixin(
       gateway.spec.listeners.withName('http') +
       gateway.spec.listeners.withProtocol('HTTP') +
-      gateway.spec.listeners.withPort(80) +
+      gateway.spec.listeners.withPort($._config.listeners.http.port) +
       gateway.spec.listeners.allowedRoutes.namespaces.withFrom('All')
     ),
 
   _upstream:: data[$._config.version],
 
   objects: {
-    namespaces: $._upstream.v1.Namespace,
-    upstream: $._upstream,
-    gateway: {
+    phase0: $._upstream.v1.Namespace,
+    phase1: $._upstream,
+    phase2: {
       contourDeploymentConfiguration: $._contourDeploymentConfiguration,
       gateway: $._gateway,
       gatewayClass: $._gatewayClass,
