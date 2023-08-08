@@ -16,11 +16,12 @@ create: # Install the Contour Gateway Controller
 	kubectl wait --namespace gateway-system --for=condition=available --timeout=90s deploy/gateway-api-admission-server; \
 	kubectl wait --namespace gateway-system --timeout=60s --for=condition=complete job gateway-api-admission; \
 	kubectl wait --namespace gateway-system --timeout=60s --for=condition=complete job gateway-api-admission-patch; \
-	kubecfg -J ../lib show -e "(import 'main.jsonnet').objects.gatewayClass" | kubectl --server-side=true apply -f -; \
-	sleep 1
 	kubecfg -J ../lib show -e "(import 'main.jsonnet').objects.gateway" | kubectl --server-side=true apply -f -; \
   e_success "Done"
 
+.PHONY: show
+show:  # Show the manifests
+	kubecfg -J ../lib show main.jsonnet
 #.PHONY: clean
 #clean: # Clean the project
 
