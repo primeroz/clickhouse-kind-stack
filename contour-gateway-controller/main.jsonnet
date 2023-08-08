@@ -29,7 +29,7 @@ local data = {
   _gatewayClass::
     gatewayClass.new($._config.name) +
     gatewayClass.spec.withControllerName('projectcontour.io/gateway-controller') +
-    gatewayClass.spec.parametersRef.withGroup('projectcontour') +
+    gatewayClass.spec.parametersRef.withGroup('projectcontour.io') +
     gatewayClass.spec.parametersRef.withKind('ContourDeployment') +
     gatewayClass.spec.parametersRef.withName($._contourDeploymentConfiguration.metadata.name) +
     gatewayClass.spec.parametersRef.withNamespace($._contourDeploymentConfiguration.metadata.namespace),
