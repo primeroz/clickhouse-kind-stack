@@ -16,6 +16,10 @@ create-contour-gateway: # Install the Contour Gateway Controller
 create-jupyterhub: # Install the Jupyterhub
 	$(MAKE) -C jupyter create
 
+.PHONY: create-clickhouse
+create-clickhouse: # Install the clickhouse
+	$(MAKE) -C clickhouse-single-server create
+
 .PHONY: create-kind
 create-kind: # Create the kind cluster
 	@./kind.sh exists || ./kind.sh create

@@ -16,7 +16,7 @@ VERBOSE=1
 source ./common
 
 KIND_K8S_IMAGE=${KIND_K8S_IMAGE:-"kindest/node:v1.26.6@sha256:6e2d8b28a5b601defe327b98bd1c2d1930b49e5d8c512e1895099e4504007adb"}
-KIND_CLUSTER_NAME=${KIND_CLUSTER_NAME:-"meta"}
+KIND_CLUSTER_NAME=${KIND_CLUSTER_NAME:-"clickhouse"}
 KIND_WAIT=${KIND_WAIT:-"180s"}
 KIND_API_SERVER_ADDRESS=${KIND_API_SERVER_ADDRESS:-"0.0.0.0"}
 KIND_API_SERVER_PORT=${KIND_API_SERVER_PORT:-6443}
@@ -54,6 +54,9 @@ nodes:
     protocol: TCP
   - containerPort: 30443
     hostPort: 443
+    protocol: TCP
+  - containerPort: 30009
+    hostPort: 9000
     protocol: TCP
 EOF
 

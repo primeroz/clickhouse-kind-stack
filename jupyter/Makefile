@@ -13,17 +13,14 @@ update-helm: # Update helm vendored version
 	helm pull jupyterhub/jupyterhub -d upstream --version ${JUPYTER_VERSION}
 
 
+#kubectl wait --namespace jupyterhub --for=condition=available --timeout=90s deploy/user-scheduler; \
 .PHONY: create
 create: # Install the JupyterHub workload
 	@source ../common ;\
   e_header "Creating JupyterHub" ;\
-	kubecfg -J ../lib show -e "(import 'main.jsonnet').objects.phase0" | kubectl --server-side=true apply -f -; \
-	sleep 2
-	kubecfg -J ../lib show -e "(import 'main.jsonnet').objects.phase1" | kubectl --server-side=true apply -f -; \
-	sleep 5
+	kubecfg -J ../lib update main.jsonnet --validate=true
 	kubectl wait --namespace jupyterhub --for=condition=available --timeout=90s deploy/hub; \
 	kubectl wait --namespace jupyterhub --for=condition=available --timeout=90s deploy/proxy; \
-	kubectl wait --namespace jupyterhub --for=condition=available --timeout=90s deploy/user-scheduler; \
 	kubectl rollout status --namespace jupyterhub --timeout=90s daemonset/continuous-image-puller; \
 	kubectl rollout status --namespace jupyterhub --timeout=90s daemonset/hook-image-puller; \
 	kubectl wait --namespace jupyterhub --timeout=90s --for=condition=complete job hook-image-awaiter; \

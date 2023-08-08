@@ -33,6 +33,7 @@ local k = import 'vendor/k8s-libsonnet/1.26/main.libsonnet';
   _client_statefulSet::
     statefulSet.new('clickhouse-client', 1, [$._client_container], []) +
     statefulSet.metadata.withNamespace($._config.namespace) +
+    statefulSet.mixin.spec.withServiceName('clickhouse-client') +
     statefulSet.mixin.spec.updateStrategy.withType('RollingUpdate'),
 
   client_resources: {

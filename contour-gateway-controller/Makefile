@@ -8,15 +8,11 @@ help: # Show help for each of the Makefile recipes.
 create: # Install the Contour Gateway Controller
 	@source ../common ;\
   e_header "Creating Contour Gateway controller" ;\
-	kubecfg -J ../lib show -e "(import 'main.jsonnet').objects.phase0" | kubectl --server-side=true apply -f -; \
-	sleep 2
-	kubecfg -J ../lib show -e "(import 'main.jsonnet').objects.phase1" | kubectl --server-side=true apply -f -; \
-	sleep 5
+	kubecfg -J ../lib update main.jsonnet --validate=false; \
 	kubectl wait --namespace projectcontour --for=condition=available --timeout=90s deploy/contour-gateway-provisioner; \
 	kubectl wait --namespace gateway-system --for=condition=available --timeout=90s deploy/gateway-api-admission-server; \
 	kubectl wait --namespace gateway-system --timeout=60s --for=condition=complete job gateway-api-admission; \
 	kubectl wait --namespace gateway-system --timeout=60s --for=condition=complete job gateway-api-admission-patch; \
-	kubecfg -J ../lib show -e "(import 'main.jsonnet').objects.phase2" | kubectl --server-side=true apply -f -; \
   e_success "Done"
 
 .PHONY: show

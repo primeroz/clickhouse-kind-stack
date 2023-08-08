@@ -7,6 +7,8 @@ local k = import 'vendor/k8s-libsonnet/1.26/main.libsonnet';
 ch + client {
 
   local httpRoute = g.v1beta1.httpRoute,
+  local svc = k.core.v1.service,
+  local svcPort = k.core.v1.servicePort,
 
   _config+:: {
     gateway: {
@@ -38,5 +40,14 @@ ch + client {
         httpRoute.spec.rules.backendRefs.withPort($._server_service.spec.ports[0].port)
       ),
     ),
+
+  _serviceNativeNodePort:
+    svc.new('clickhouse-np', $._server_statefulSet.spec.selector.matchLabels, []) +
+    svc.metadata.withNamespace($._config.namespace) +
+    svc.spec.withPortsMixin(
+      svcPort.newNamed('native', 9000, 9000) +
+      svcPort.withNodePort(30009)
+    ) +
+    svc.spec.withType('NodePort'),
 
 }

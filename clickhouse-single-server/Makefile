@@ -8,10 +8,7 @@ help: # Show help for each of the Makefile recipes.
 create: # Install the Clickhouse-server workload
 	@source ../common ;\
   e_header "Creating Clickhouse-server" ;\
-	kubecfg -J ../lib show -e "(import 'main.jsonnet').resources.namespace" | kubectl --server-side=true apply -f -; \
-	sleep 1
-	kubecfg -J ../lib show main.jsonnet | kubectl --server-side=true apply -f -; \
-	sleep 5
+	kubecfg -J ../lib update main.jsonnet
 	kubectl rollout status --namespace clickhouse --timeout=90s statefulset/clickhouse-server; \
   e_success "Done"
 
