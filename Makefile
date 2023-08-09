@@ -12,6 +12,10 @@ run: create-kind # Run the project
 create-ingress: # Install the Nginx ingress Controller
 	$(MAKE) -C nginx-ingress create
 
+.PHONY: create-superset
+create-superset: # Install the Superset Workload
+	$(MAKE) -C superset create
+
 .PHONY: create-jupyterhub
 create-jupyterhub: # Install the Jupyterhub
 	$(MAKE) -C jupyter create
