@@ -10,7 +10,9 @@ run: create-kind # Run the project
 	$(MAKE) create-ingress
 	sleep 30 # Wait for ingress webhook to be available
 	$(MAKE) create-clickhouse
+	$(MAKE) create-jupyterhub
 	$(MAKE) create-superset
+	$(MAKE) create-airflow
 
 .PHONY: check-kind-context
 check-kind-context: # Check the current context is the kind expected ONESHELL
@@ -19,6 +21,10 @@ check-kind-context: # Check the current context is the kind expected ONESHELL
 .PHONY: create-ingress
 create-ingress: # Install the Nginx ingress Controller
 	$(MAKE) -C nginx-ingress create
+
+.PHONY: create-airflow
+create-airflow: # Install the Superset Workload
+	$(MAKE) -C airflow create
 
 .PHONY: create-superset
 create-superset: # Install the Superset Workload
