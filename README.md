@@ -10,3 +10,14 @@
   * any user / password combination is valid and will spawn a dedicated hub for the user
 * Apache SuperSet 
   * access as `http://superset.127.0.0.1.nip.io` for http access with `admin/admin` credentials
+
+### TODO
+
+* jupyterHub
+  * Build image with clickhouse Libraries
+  * Sync notebooks 
+  * Authentication
+* SuperSet
+  * Authentication
+  * Persist Database
+  * CeleryBeat alerting
