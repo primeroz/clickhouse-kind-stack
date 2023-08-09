@@ -8,9 +8,9 @@ help: # Show help for each of the Makefile recipes.
 run: create-kind # Run the project
 	exit 0
 
-.PHONY: create-gateway
-create-gateway: # Install the Nginx Gateway Controller
-	$(MAKE) -C nginx-kubernetes-gateway create
+.PHONY: create-ingress
+create-ingress: # Install the Nginx ingress Controller
+	$(MAKE) -C nginx-ingress create
 
 .PHONY: create-jupyterhub
 create-jupyterhub: # Install the Jupyterhub

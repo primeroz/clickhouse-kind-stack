@@ -84,7 +84,7 @@ local k = import 'vendor/k8s-libsonnet/1.26/main.libsonnet';
     pvc.mixin.spec.withStorageClassName($._config.server.volumes.data.storageClass),
 
   _server_statefulSet::
-    statefulSet.new('clickhouse-server', 1, [$._server_container], [$._server_data_pvc, $._server_logs_pvc]) +
+    statefulSet.new('clickhouse-server', 1, [$._server_container], std.prune([$._server_data_pvc, $._server_logs_pvc])) +
     statefulSet.metadata.withNamespace($._config.namespace) +
     statefulSet.mixin.spec.withServiceName('clickhouse') +
     //$.config_hash_mixin +
