@@ -25,6 +25,37 @@ local data = {
         name: 'jupyter/datascience-notebook',
         tag: 'latest',
       },
+
+      profileList: [
+        {
+          display_name: 'default environment',
+          description: 'DataScience notebook',
+          default: true,
+          kubespawner_override: {
+            image: 'jupyter/datascience-notebook:latest',
+          },
+        },
+        {
+          display_name: 'clickhouse environment',
+          description: 'DataScience + Clickhouse notebook',
+          kubespawner_override: {
+            image: 'primeroz/datascience-notebook:latest',
+            //lifecycle_hooks: {
+            //  postStart: {
+            //    exec: {
+            //      command: [
+            //        'sh',
+            //        '-c',
+            //        'mkdir notebooks; cd notebooks; git init; git remote add -f origin https://github.com/primeroz/clickhouse-kind-stack; git config core.sparseCheckout true; echo "extras/juypyter_notebooks" >> .git/info/sparse-checkout; git pull origin main; rm -rf .git;\n',
+            //      ],
+            //    },
+            //  },
+            //},
+          },
+        },
+
+      ],
+
     },
     proxy: {
       service: {
