@@ -6,6 +6,14 @@ help: # Show help for each of the Makefile recipes.
 
 .PHONY: run
 run: create-kind # Run the project
+	$(MAKE) check-kind-context
+	$(MAKE) create-ingress
+	sleep 30 # Wait for ingress webhook to be available
+	$(MAKE) create-clickhouse
+	$(MAKE) create-superset
+
+.PHONY: check-kind-context
+check-kind-context: # Check the current context is the kind expected ONESHELL
 	exit 0
 
 .PHONY: create-ingress
